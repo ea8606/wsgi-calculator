@@ -1,3 +1,4 @@
+import re
 """
 For your homework this week, you'll be creating a wsgi application of
 your own.
@@ -42,43 +43,149 @@ To submit your homework:
 """
 
 
+def args_string_to_int(*args):
+    """ Convert args to ints
+    args: a string that can be converted to int
+    return: a list of int
+    """
+    operands = [int(i) for i in args]
+    return operands
+
+
 def add(*args):
     """ Returns a STRING with the sum of the arguments """
+    operands = args_string_to_int(*args)
+    add_template = """<h2>Add</h2>
+<p>The answer to {} + {} = {}</p>
+"""
+    body = add_template.format(*args, sum(operands))
+    return body
 
-    # TODO: Fill sum with the correct value, based on the
-    # args provided.
-    sum = "0"
 
-    return sum
+def multiply(*args):
+    operands = args_string_to_int(*args)
+    product = 1
+    for i in operands:
+        product *= i
+    multiply_template = """<h2>Multiply</h2>
+<p>The answer to {} * {} = {}</p>
+"""
+    body = multiply_template.format(*args, product)
+    return body
 
-# TODO: Add functions for handling more arithmetic operations.
+
+def subtract(*args):
+    operands = args_string_to_int(*args)
+    difference = 0
+    loop_counter = 0
+    for i in operands:
+        if difference == 0:
+            if loop_counter == 0:
+                difference = i
+                loop_counter += 1
+        else:
+            difference -= i
+            loop_counter += 1
+    subtract_template = """<h2>Subtract</h2>
+<p>The answer to {} - {} = {}</p>
+"""
+    body = subtract_template.format(*args, difference)
+    return body
+
+
+def divide(*args):
+    operands = args_string_to_int(*args)
+    quotient = 1
+    try:
+        quotient = operands[0] / operands[1]
+    except ZeroDivisionError:
+        body = """<h1>Divide by zero</h1>
+
+<p>The second number can not be 0, choose another.</p>
+"""
+        return body
+    divide_template = """<h2>Divide</h2>
+<p>The answer to {} / {} = {}</p>
+"""
+    body = divide_template.format(*args, quotient)
+    return body
+
+
+def home():
+    body = '''<h2 style="margin-left: 80px;">HOW-TO-DOC FOR WSGI CALCULATOR</h2>
+
+<ul>
+    <li>To add 2 + 3, navigate to:
+    <ul>
+        <li>/add/2/3</li>
+    </ul>
+    </li>
+    <li>To multiply 3 * 4, navigate to:
+    <ul>
+        <li>/multiply/3/4</li>
+    </ul>
+    </li>
+    <li>To subtract 3 - 4, navigate to:
+    <ul>
+        <li>/subtract/3/4</li>
+        <li>/subtract/-3/4</li>
+    </ul>
+    </li>
+    <li>To divide 3/4 navigate to:
+    <ul>
+        <li>/divide/3/4</li>
+        <li>/divide/-3/4</li>
+    </ul>
+    </li>
+</ul>
+'''
+    return body
+
 
 def resolve_path(path):
     """
     Should return two values: a callable and an iterable of
     arguments.
     """
+    urls = [(r'^$', home),
+            (r'^add/([\d]+)/([\d]+)$', add),
+            (r'^multiply/([\d]+)/([\d]+)$', multiply),
+            (r'^subtract/([\d]+)/([\d]+)$', subtract),
+            (r'^divide/([\d]+)/([\d]+)$', divide), ]
+    matchpath = path.lstrip('/')
+    for regexp, func in urls:
+        match = re.match(regexp, matchpath)
+        if match is None:
+            continue
+        args = match.groups([])
+        return func, args
+    # we get here if no url matches
+    raise NameError
 
-    # TODO: Provide correct values for func and args. The
-    # examples provide the correct *syntax*, but you should
-    # determine the actual values of func and args using the
-    # path.
-    func = add
-    args = ['25', '32']
-
-    return func, args
 
 def application(environ, start_response):
-    # TODO: Your application code from the book database
-    # work here as well! Remember that your application must
-    # invoke start_response(status, headers) and also return
-    # the body of the response in BYTE encoding.
-    #
-    # TODO (bonus): Add error handling for a user attempting
-    # to divide by zero.
-    pass
+
+    headers = [("Content-type", "text/html")]
+    try:
+        path = environ.get('PATH_INFO', None)
+        if path is None:
+            raise NameError
+        func, args = resolve_path(path)
+        body = func(*args)
+        status = "200 OK"
+    except NameError:
+        status = "404 Not Found"
+        body = "<h1>Not Found</h1>"
+    except Exception:
+        status = "500 Internal Server Error"
+        body = "<h1>Internal Server Error</h1>"
+    finally:
+        headers.append(('Content-length', str(len(body))))
+        start_response(status, headers)
+        return [body.encode('utf8')]
+
 
 if __name__ == '__main__':
-    # TODO: Insert the same boilerplate wsgiref simple
-    # server creation that you used in the book database.
-    pass
+    from wsgiref.simple_server import make_server
+    srv = make_server('localhost', 8080, application)
+    srv.serve_forever()
