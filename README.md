@@ -4,7 +4,7 @@
 
 Getting Started
 
-Fork the https://github.com/UWPCEWebPythonSpr18/wsgi-calculator (Links to an external site.)Links to an external site. repository into your account.
+Fork the https://github.com/UWPCEWebPythonSpr18/wsgi-calculator repository into your account.
 Clone your fork to your machine.
 Complete the TODOs in the code.
 I suggest that you also clone down the https://github.com/UWPCEWebPythonSpr18/pseudo-calculator (Links to an external site.)Links to an external site. repository to your machine, review the code, run it with `python -u pseudo_calculator.py`, and review the video above.
