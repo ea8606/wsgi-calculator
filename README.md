@@ -2,23 +2,17 @@
 
 A very simple calculator utilizing WSGI
 
-## To use the calculator
+Getting Started
+Fork the https://github.com/UWPCEWebPythonSpr18/wsgi-calculator (Links to an external site.)Links to an external site. repository into your account.
+Clone your fork to your machine.
+Complete the TODOs in the code.
+I suggest that you also clone down the https://github.com/UWPCEWebPythonSpr18/pseudo-calculator (Links to an external site.)Links to an external site. repository to your machine, review the code, run it with `python -u pseudo_calculator.py`, and review the video above.
 
-You'll be completing the adventure server which has been been started in `server.py`. Read the specification at the top of the class in that file, and complete the "TODO" items.
+How to Know When You're Done
+When you have completed the TODOs, you should be able to visit the following pages and see a page with the indicated content.
 
-## To Test Your Work
-
-To test your work, run the server and then connect to it using the provided client. You'll need two terminal windows. In one, type:
-
-```
-$ python serve.py 50000
-```
-
-In the other, type
-```
-$ python client.py 50000
-```
-
-Then explore a four-room world of fun and adventure.
-
-Note that `50000` specifies the port number for the server. You can safely choose any number between 8000 and 50000, but you have to use the same number when calling the client that you used to create the server.
+http://localhost:8080/multiply/3/5 (Links to an external site.)Links to an external site.  => 15
+http://localhost:8080/add/23/42 (Links to an external site.)Links to an external site.  => 65
+http://localhost:8080/subtract/23/42 (Links to an external site.)Links to an external site.  => -19
+http://localhost:8080/divide/22/11 (Links to an external site.)Links to an external site.  => 2
+http://localhost:8080/ (Links to an external site.)Links to an external site.  => Here's how to use this page... (etc.)
