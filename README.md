@@ -12,8 +12,8 @@ I suggest that you also clone down the https://github.com/UWPCEWebPythonSpr18/ps
 ## How to Know When You're Done
 When you have completed the TODOs, you should be able to visit the following pages and see a page with the indicated content.
 
-http://localhost:8080/multiply/3/5 (Links to an external site.)Links to an external site.  => 15
-http://localhost:8080/add/23/42 (Links to an external site.)Links to an external site.  => 65
-http://localhost:8080/subtract/23/42 (Links to an external site.)Links to an external site.  => -19
-http://localhost:8080/divide/22/11 (Links to an external site.)Links to an external site.  => 2
-http://localhost:8080/ (Links to an external site.)Links to an external site.  => Here's how to use this page... (etc.)
+http://localhost:8080/multiply/3/5   => 15
+http://localhost:8080/add/23/42   => 65
+http://localhost:8080/subtract/23/42   => -19
+http://localhost:8080/divide/22/11  => 2
+http://localhost:8080/   => Here's how to use this page... (etc.)
