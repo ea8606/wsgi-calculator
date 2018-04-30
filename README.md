@@ -1,6 +1,6 @@
 # Lesson 04 Assignment
 
-A very simple calculator utilizing WSGI
+## A very simple calculator utilizing WSGI
 
 Getting Started
 Fork the https://github.com/UWPCEWebPythonSpr18/wsgi-calculator (Links to an external site.)Links to an external site. repository into your account.
