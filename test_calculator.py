@@ -1,3 +1,4 @@
+''' Run this test using pytest '''
 import calculator
 from pytest import raises
 
